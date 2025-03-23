@@ -22,5 +22,6 @@ jobs:
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}  # Utilisation du token pour l'authentification
         run: |
-          railway up --service web  # Utilise le service "web" pour le déploiement
+          railway up --service "service web"  # Utilisation du nom exact du service entre guillemets
+
 
