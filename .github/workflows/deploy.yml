@@ -10,16 +10,9 @@ jobs:
     runs-on: ubuntu-latest  # Le workflow s'exécute sur un environnement Linux (Ubuntu)
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3  # Télécharge le code source depuis GitHub
-
-      - name: Install Railway CLI
-        run: |
-          curl -fsSL https://railway.app/install.sh | sh
-          export PATH=$HOME/.railway/bin:$PATH
-
-      - name: Deploy to Railway
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}  # Utilisation du token sécurisé pour authentification
-        run: |
-          railway up
+  - uses: actions/checkout@v3
+  - name: Deploy to Railway
+    env:
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    run: |
+      railway up
