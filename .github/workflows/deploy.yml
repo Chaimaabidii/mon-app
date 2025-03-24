@@ -10,10 +10,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout du code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Deploy to Railway
+      # Installer Railway CLI
+      - name: Install Railway CLI
         run: |
-          railway up
+          curl -sSL https://railway.app/cli.sh | sh
+          export PATH=$HOME/.railway/bin:$PATH
 
+      # Connexion à Railway avec le token API
+      - name: Login to Railway
+        run: railway login --apiKey ${{ secrets.RAILWAY_TOKEN }}
+
+      # Déploiement sur Railway
+      - name: Deploy to Railway
+        run: railway up
