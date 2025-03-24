@@ -3,31 +3,19 @@ name: Deploy to Railway
 on:
   push:
     branches:
-      - main  # Déclenchement sur la branche 'main'
+      - main
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Utilisation de l'environnement Ubuntu pour exécuter les commandes
+    runs-on: ubuntu-latest
 
     steps:
-      # Étape 1 : Cloner le code du dépôt
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      # Étape 2 : Installer curl et bash si nécessaires
-      - name: Install bash and curl
+      - name: Install Railway CLI via npm
         run: |
-          sudo apt-get update
-          sudo apt-get install -y bash curl
+          npm install -g railway
 
-      # Étape 3 : Installer le Railway CLI
-      - name: Install Railway CLI
-        run: |
-          curl -sSL https://railway.app/cli.sh -o railway.sh  # Télécharge le script Railway CLI
-          chmod +x railway.sh  # Rend le script exécutable
-          ./railway.sh  # Exécute le script
-
-      # Étape 4 : Déploiement sur Railway
       - name: Deploy to Railway
         run: |
-          railway up  # Déploiement sur Railway
+          railway up
