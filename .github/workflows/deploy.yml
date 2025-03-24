@@ -3,25 +3,30 @@ name: Deploy to Railway
 on:
   push:
     branches:
-      - main  # Déploiement déclenché par un push sur la branche main
+      - main  # Déclenche le workflow à chaque push sur la branche main
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Environnement Linux (Ubuntu) pour l'exécution
+    runs-on: ubuntu-latest  # Exécute le job sur un environnement Ubuntu Linux
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3  # Télécharge le code depuis GitHub
+        uses: actions/checkout@v3  # Récupère le code source du dépôt GitHub
 
       - name: Install Railway CLI
         run: |
-          curl -fsSL https://railway.app/install.sh | sh
-          export PATH=$HOME/.railway/bin:$PATH
+          curl -fsSL https://railway.app/install.sh | sh  # Installe Railway CLI
+          export PATH=$HOME/.railway/bin:$PATH  # Ajoute Railway CLI au PATH
+
+      - name: Authenticate with Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}  # Utilisation du token Railway stocké dans GitHub Secrets
+        run: |
+          railway login --token "$RAILWAY_TOKEN"  # Authentification avec le token sécurisé
 
       - name: Deploy to Railway
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}  # Utilisation du token pour l'authentification
         run: |
-          railway up --service "service web"  # Utilisation du nom exact du service entre guillemets
+          railway up  # Déploie l'application sur Railway
+
 
 
