@@ -17,6 +17,13 @@ jobs:
         run: |
           npm install -g @railway/cli
 
+      # Authentification avec Railway via le token d'API
+      - name: Login to Railway
+        env:
+          RAILWAY_API_KEY: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          railway login --apiKey $RAILWAY_API_KEY
+
       # Déployer l'application sur Railway
       - name: Deploy to Railway
         run: |
