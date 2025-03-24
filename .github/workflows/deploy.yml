@@ -20,9 +20,9 @@ jobs:
       # Authentification avec Railway via le token d'API
       - name: Login to Railway
         env:
-          RAILWAY_API_KEY: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}  # Utilise le secret correctement
         run: |
-          railway login --apiKey $RAILWAY_API_KEY
+          railway login --apiKey $RAILWAY_TOKEN
 
       # Déployer l'application sur Railway
       - name: Deploy to Railway
