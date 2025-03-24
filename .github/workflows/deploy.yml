@@ -16,17 +16,13 @@ jobs:
       - name: Install Railway CLI
         run: |
           curl -fsSL https://railway.app/install.sh | sh  # Installe Railway CLI
-          export PATH=$HOME/.railway/bin:$PATH  # Ajoute Railway CLI au PATH
+          echo "$HOME/.railway/bin" >> $GITHUB_PATH  # Ajoute Railway CLI au PATH
 
-      - name: Authenticate with Railway
+      - name: Deploy to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}  # Utilisation du token Railway stocké dans GitHub Secrets
         run: |
-          railway login --token "$RAILWAY_TOKEN"  # Authentification avec le token sécurisé
-
-      - name: Deploy to Railway
-        run: |
-          railway up  # Déploie l'application sur Railway
+          railway up --service "service web"  # Déploie l'application sur Railway en précisant le service
 
 
 
