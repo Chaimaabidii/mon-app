@@ -12,10 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install Railway CLI via npm
+      # Installer la version mise à jour de Railway CLI via npm
+      - name: Install Railway CLI
         run: |
-          npm install -g railway
+          npm install -g @railway/cli
 
+      # Déployer l'application sur Railway
       - name: Deploy to Railway
         run: |
           railway up
