@@ -9,11 +9,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Railway CLI
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Utilise la version de Node.js que tu souhaites
+
+      - name: Install Railway CLI
         run: |
-          curl -sSL https://railway.app/cli.sh | sh
+          npm install -g railway
+
       - name: Login to Railway
-        run: railway login --apiKey ${{ secrets.RAILWAY_API_KEY }}
-      - name: Deploy to Railway
-        run: railway up --projectId ${{ secrets.RAILWAY_PROJECT_ID }}
