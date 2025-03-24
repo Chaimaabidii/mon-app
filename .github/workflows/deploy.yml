@@ -8,17 +8,12 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'  # Utilise la version de Node.js que tu souhaites
-
-      - name: Install Railway CLI
+      - name: Deploy to Railway
         run: |
-          npm install -g railway
+          railway up
 
-      - name: Login to Railway
