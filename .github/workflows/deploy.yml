@@ -12,19 +12,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Installer la version mise à jour de Railway CLI via npm
+      # Installer Railway CLI
       - name: Install Railway CLI
-        run: |
-          npm install -g @railway/cli
+        run: npm install -g @railway/cli
 
-      # Authentification avec Railway via le token d'API
-      - name: Login to Railway
+      # Lier le projet Railway à ce repo
+      - name: Link Railway Project
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}  # Utilise le secret correctement
-        run: |
-          railway login --apiKey $RAILWAY_TOKEN
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway link --project <PROJECT_ID>
 
-      # Déployer l'application sur Railway
+      # Déployer sur Railway
       - name: Deploy to Railway
-        run: |
-          railway up
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway up
+
