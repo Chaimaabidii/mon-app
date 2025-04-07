@@ -11,14 +11,21 @@ jobs:
     container: ghcr.io/railwayapp/cli:latest  # Use the Railway CLI container
 
     env:
-      SVC_ID: dc69626d-0430-4b93-a579-b23dd48ddebc  # Replace with your actual service ID
       RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}  # Use the RAILWAY_TOKEN secret
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3  # Checkout the repository code
 
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli  # Install Railway CLI
+
+      - name: Link Railway Project
+        run: railway link --project dc69626d-0430-4b93-a579-b23dd48ddebc  # Link the project to Railway
+
       - name: Deploy to Railway
-        run: railway up --service=${{ env.SVC_ID }}  # Deploy to Railway using the service ID
+        run: railway up --service "service web"  # Use the service name ("service web") for deployment
+
+
 
 
